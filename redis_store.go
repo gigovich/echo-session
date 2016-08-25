@@ -3,6 +3,7 @@ package session
 import (
 	"github.com/boj/redistore"
 	"github.com/gorilla/sessions"
+	"github.com/garyburd/redigo/redis"
 )
 
 type RedisStore interface {
@@ -31,7 +32,7 @@ func NewRedisStore(size int, network, address, password string, keyPairs ...[]by
 }
 
 func NewRediStoreWithPool(pool *redis.Pool, keyPairs ...[]byte) (RedisStore, error) {
-	store, err := redistore.NewRediStoreWithPool(pool *redis.Pool, keyPairs...)
+	store, err := redistore.NewRediStoreWithPool(pool, keyPairs...)
 	if err != nil {
 		return nil, err
 	}
