@@ -30,6 +30,14 @@ func NewRedisStore(size int, network, address, password string, keyPairs ...[]by
 	return &redisStore{store}, nil
 }
 
+func NewRediStoreWithPool(pool *redis.Pool, keyPairs ...[]byte) (RedisStore, error) {
+	store, err := redistore.NewRediStoreWithPool(pool *redis.Pool, keyPairs...)
+	if err != nil {
+		return nil, err
+	}
+	return &redisStore{store}, nil
+}
+
 type redisStore struct {
 	*redistore.RediStore
 }
