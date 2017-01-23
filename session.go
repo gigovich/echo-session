@@ -6,7 +6,6 @@ import (
 
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo"
-	"github.com/labstack/echo/engine/standard"
 )
 
 const (
@@ -60,10 +59,7 @@ type Session interface {
 func Sessions(name string, store Store) echo.MiddlewareFunc {
 	return func(h echo.HandlerFunc) echo.HandlerFunc {
 		return func(ctx echo.Context) error {
-			rq := ctx.Request().(*standard.Request)
-			rs := ctx.Response().(*standard.Response)
-			
-			s := &session{name, rq.Request, store, nil, false, rs.ResponseWriter}
+			s := &session{name, ctx.Request(), store, nil, false, ctx.Response()}
 			ctx.Set(DefaultKey, s)
 			return h(ctx)
 		}
